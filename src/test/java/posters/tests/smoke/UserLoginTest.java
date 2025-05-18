@@ -15,11 +15,11 @@ import posters.pageobjects.pages.user.LoginPage;
 import posters.tests.AbstractTest;
 import posters.tests.testdata.dataobjects.User;
 
-@Owner("ACC")
+@Owner("AE")
 @Severity(SeverityLevel.NORMAL)
 @Tag("functionality")
 @Tag("registered")
-public class LoginTest extends AbstractTest
+public class UserLoginTest extends AbstractTest
 {
     @DataItem
     private User user;
@@ -51,7 +51,7 @@ public class LoginTest extends AbstractTest
     {
         var homePage = loginPage.sendLoginForm(user);
         homePage.header.userMenu.validateStructure();
-        //homePage.validateSuccessfulLogin(user.getFirstName());
+        homePage.validateSuccessfulLogin(user.getFirstName(), user.getLastName());
     }
 
     @NeodymiumTest
@@ -76,6 +76,7 @@ public class LoginTest extends AbstractTest
     public void testLoginWithoutRequiredFields()
     {
         loginPage.sendFalseLoginForm(user);
-        loginPage.errorMessage.validateNoErrorMessageOnPage();
+        loginPage.validateMissingLoginInfo(user.getEmail());
+        //loginPage.errorMessage.validateNoErrorMessageOnPage();
     }
 }
